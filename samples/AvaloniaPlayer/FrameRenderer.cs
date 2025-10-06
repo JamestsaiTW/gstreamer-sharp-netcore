@@ -45,7 +45,7 @@ namespace GStreamerPlayer
                                          (rect.Height - size.Height)/2, 
                                          size.Width, size.Height);
 
-                context.DrawImage(bitmap, 1, new Rect(0, 0, bmpSize.Width, bmpSize.Height), drawRect);
+                context.DrawImage(bitmap, new Rect(0, 0, bmpSize.Width, bmpSize.Height), drawRect);
             }
             base.Render(context);
         }
@@ -69,8 +69,8 @@ namespace GStreamerPlayer
             {
                 map.CopyTo(l.Address, l.RowBytes * l.Size.Height);
             }
-            VisualRoot?.Renderer.AddDirty(this);
-        }
 
+            InvalidateVisual();
+        }
     }
 }

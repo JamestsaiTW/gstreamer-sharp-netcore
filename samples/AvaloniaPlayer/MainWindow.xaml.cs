@@ -68,7 +68,7 @@ namespace GStreamerPlayer
             };
 
             urisOfChoice.FilterMode = AutoCompleteFilterMode.ContainsOrdinal;
-            urisOfChoice.Items = new string[]
+            urisOfChoice.ItemsSource = new string[]
             {
                 "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd",
                 "http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_2160p_60fps_normal.mp4"
