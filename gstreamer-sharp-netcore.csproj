@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Gst</RootNamespace>
     <AssemblyName>gstreamer-sharp-netcore</AssemblyName>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -32,5 +32,9 @@
     <Compile Include="gstreamer-sharp\sources\custom\**\*.cs" />
     <Compile Include="gstreamer-sharp\sources\generated\**\*.cs" Exclude="gstreamer-sharp\sources\generated\Gst\PadTemplate.cs" />
     <Compile Include="gst-netcore\**\*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="samples\**" />
+    <None Remove="samples\**" />
   </ItemGroup>
 </Project>
