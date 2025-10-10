@@ -67,7 +67,11 @@ namespace GStreamerPlayer
 
             using (var l = Bitmap.Lock())
             {
-                map.CopyTo(l.Address, l.RowBytes * l.Size.Height);
+                // ±N map.Data ½Æ»s¨ì l.Address
+                if (map.Data != null)
+                {
+                    System.Runtime.InteropServices.Marshal.Copy(map.Data, 0, l.Address, (int)Math.Min(map.Data.Length, l.RowBytes * l.Size.Height));
+                }
             }
 
             InvalidateVisual();
