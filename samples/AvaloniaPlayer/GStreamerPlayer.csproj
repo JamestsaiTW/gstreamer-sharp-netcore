@@ -26,18 +26,23 @@
 			<SubType>Designer</SubType>
 		</AvaloniaResource>
 	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="gstreamer-sharp.dll.config">
+			<LogicalName>gstreamer-sharp.dll.config</LogicalName>
+		</EmbeddedResource>
+	</ItemGroup>
 <ItemGroup>
 	  <Folder Include="Properties\" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Reference Include="gio-sharp">
-	    <HintPath>..\Gstreamer-Sharp-DLLs\gio-sharp.dll</HintPath>
-	  </Reference>
-	  <Reference Include="glib-sharp">
-	    <HintPath>..\Gstreamer-Sharp-DLLs\glib-sharp.dll</HintPath>
-	  </Reference>
-	  <Reference Include="gstreamer-sharp">
-	    <HintPath>..\Gstreamer-Sharp-DLLs\gstreamer-sharp.dll</HintPath>
-	  </Reference>
-	</ItemGroup>
+<ItemGroup>
+  <Reference Include="gio-sharp">
+    <HintPath>..\Gstreamer-Sharp-DLLs\gio-sharp.dll</HintPath>
+  </Reference>
+  <Reference Include="glib-sharp">
+    <HintPath>..\Gstreamer-Sharp-DLLs\glib-sharp.dll</HintPath>
+  </Reference>
+  <Reference Include="gstreamer-sharp">
+    <HintPath>..\Gstreamer-Sharp-DLLs\gstreamer-sharp.dll</HintPath>
+  </Reference>
+</ItemGroup>
 </Project>
