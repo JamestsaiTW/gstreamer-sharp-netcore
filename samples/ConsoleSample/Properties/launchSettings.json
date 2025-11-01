@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "GstreamerPlayer": {
+    "Netcore3ConsoleSample": {
       "commandName": "Project"
     },
     "WSL": {
