@@ -8,6 +8,11 @@
     <UseAppHost>true</UseAppHost>
   </PropertyGroup>
   <ItemGroup>
+    <EmbeddedResource Include="gstreamer-sharp.dll.config">
+      <LogicalName>gstreamer-sharp.dll.config</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="gio-sharp">
       <HintPath>..\Gstreamer-Sharp-DLLs\gio-sharp.dll</HintPath>
     </Reference>
