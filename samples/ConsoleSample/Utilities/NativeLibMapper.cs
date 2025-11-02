@@ -52,7 +52,7 @@ public static class NativeLibMapper
             using (var stream = resAsm.GetManifestResourceStream("gstreamer-sharp.dll.config"))
             {
                 if (stream == null)
-                    throw new InvalidOperationException("Embedded resource 'gstreamer-sharp.dll.config' not found in AvaloniaPlayer assembly.");
+                    throw new InvalidOperationException("Embedded resource 'gstreamer-sharp.dll.config' not found in Netcore3ConsoleSample assembly.");
                 mappingDocument = XElement.Load(stream);
             }
         }
