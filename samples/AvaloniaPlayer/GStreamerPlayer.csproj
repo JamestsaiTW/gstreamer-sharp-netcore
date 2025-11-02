@@ -2,11 +2,7 @@
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net6.0</TargetFramework>
-		</PropertyGroup>
-	<PropertyGroup>
 		<UseAppHost>true</UseAppHost>
-	</PropertyGroup>
-	<PropertyGroup>
 		<Avalonia_I_Want_To_Use_Private_Apis_In_Nuget_Package_And_Promise_To_Pin_The_Exact_Avalonia_Version_In_Package_Dependency>
 			true
 		</Avalonia_I_Want_To_Use_Private_Apis_In_Nuget_Package_And_Promise_To_Pin_The_Exact_Avalonia_Version_In_Package_Dependency>
@@ -17,14 +13,6 @@
 		<PackageReference Include="Avalonia.Desktop" Version="11.3.7" />
 		<PackageReference Include="Avalonia.Diagnostics" Version="11.3.7" />
 		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.7" />
-	</ItemGroup>
-	<ItemGroup>
-		<Compile Update="**\*.xaml.cs">
-			<DependentUpon>%(Filename)</DependentUpon>
-		</Compile>
-		<AvaloniaResource Include="**\*.xaml">
-			<SubType>Designer</SubType>
-		</AvaloniaResource>
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="gstreamer-sharp.dll.config">

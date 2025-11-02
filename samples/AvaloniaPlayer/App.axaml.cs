@@ -4,13 +4,13 @@ using Avalonia.Markup.Xaml;
 
 namespace GStreamerPlayer
 {
-    public class App : Application
+    public partial class App : Application
     {
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
         }
-        
+
         public override void OnFrameworkInitializationCompleted()
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

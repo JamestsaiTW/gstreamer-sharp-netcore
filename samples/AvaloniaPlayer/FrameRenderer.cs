@@ -8,73 +8,76 @@ using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 
-namespace GStreamerPlayer
+namespace GStreamerPlayer;
+
+public class GstFrameRenderer : Control
 {
-    public class GstFrameRenderer : Control
+    private readonly Stretch Stretch = Stretch.Uniform;
+    private WriteableBitmap Bitmap;
+    private readonly SolidColorBrush BackgroundBrush = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+
+    protected override void OnAttachedToLogicalTree(LogicalTreeAttachmentEventArgs e)
     {
-        private readonly Stretch Stretch = Stretch.Uniform;
-        private WriteableBitmap Bitmap;
-        private readonly SolidColorBrush BackgroundBrush = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+        base.OnAttachedToLogicalTree(e);
+    }
 
-        protected override void OnAttachedToLogicalTree(LogicalTreeAttachmentEventArgs e)
+    protected override void OnDetachedFromLogicalTree(LogicalTreeAttachmentEventArgs e)
+    {
+        Bitmap?.Dispose();
+        Bitmap = null;
+        base.OnDetachedFromLogicalTree(e);
+    }
+
+    public override void Render(DrawingContext context)
+    {
+        Rect rect = new Rect(0, 0, this.Bounds.Width, this.Bounds.Height);
+
+        context.FillRectangle(BackgroundBrush, rect);
+        var bitmap = Bitmap;
+
+        if (bitmap != null
+            && bitmap.Size.Width > 0 && bitmap.Size.Height > 0
+            && rect.Width > 0 && rect.Height > 0)
         {
-            base.OnAttachedToLogicalTree(e);
+            var bmpSize = bitmap.Size;
+            Size size = Stretch.CalculateSize(rect.Size, bmpSize);
+
+            Rect drawRect = new Rect((rect.Width - size.Width) / 2,
+                (rect.Height - size.Height) / 2,
+                size.Width, size.Height);
+
+            context.DrawImage(bitmap, new Rect(0, 0, bmpSize.Width, bmpSize.Height), drawRect);
         }
-        protected override void OnDetachedFromLogicalTree(LogicalTreeAttachmentEventArgs e)
+
+        base.Render(context);
+    }
+
+    public void Clear()
+    {
+        Bitmap = null;
+        Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Background);
+    }
+
+    public void UpdateImage(ref Gst.MapInfo map, int width, int height)
+    {
+        if (Bitmap == null || Bitmap.PixelSize.Width != width || Bitmap.PixelSize.Height != height)
         {
-            Bitmap?.Dispose();
-            Bitmap = null;
-            base.OnDetachedFromLogicalTree(e);
+            var oldBitmap = Bitmap;
+            Bitmap = new Avalonia.Media.Imaging.WriteableBitmap(new PixelSize(width, height), new Vector(96, 96),
+                Avalonia.Platform.PixelFormat.Rgba8888);
+            oldBitmap?.Dispose();
         }
 
-        public override void Render(DrawingContext context)
+        using (var l = Bitmap.Lock())
         {
-            Rect rect = new Rect(0, 0, this.Bounds.Width, this.Bounds.Height);
-
-            context.FillRectangle(BackgroundBrush, rect);
-            var bitmap = Bitmap;
-
-            if (bitmap != null 
-                && bitmap.Size.Width > 0 && bitmap.Size.Height > 0
-                && rect.Width > 0 && rect.Height > 0)
+            // 將 map.Data 複製到 l.Address
+            if (map.Data != null)
             {
-                var bmpSize = bitmap.Size;
-                Size size = Stretch.CalculateSize(rect.Size, bmpSize);
-                
-                Rect drawRect = new Rect((rect.Width - size.Width)/2, 
-                                         (rect.Height - size.Height)/2, 
-                                         size.Width, size.Height);
-
-                context.DrawImage(bitmap, new Rect(0, 0, bmpSize.Width, bmpSize.Height), drawRect);
+                System.Runtime.InteropServices.Marshal.Copy(map.Data, 0, l.Address,
+                    (int)Math.Min(map.Data.Length, l.RowBytes * l.Size.Height));
             }
-            base.Render(context);
         }
 
-        public void Clear()
-        {
-            Bitmap = null;
-            Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Background);
-        }
-
-        public void UpdateImage(ref Gst.MapInfo map, int width, int height)
-        {
-            if (Bitmap == null || Bitmap.PixelSize.Width != width || Bitmap.PixelSize.Height != height)
-            {
-                var oldBitmap = Bitmap;
-                Bitmap = new Avalonia.Media.Imaging.WriteableBitmap(new PixelSize(width, height), new Vector(96, 96), Avalonia.Platform.PixelFormat.Rgba8888);
-                oldBitmap?.Dispose();
-            }
-
-            using (var l = Bitmap.Lock())
-            {
-                // 將 map.Data 複製到 l.Address
-                if (map.Data != null)
-                {
-                    System.Runtime.InteropServices.Marshal.Copy(map.Data, 0, l.Address, (int)Math.Min(map.Data.Length, l.RowBytes * l.Size.Height));
-                }
-            }
-
-            InvalidateVisual();
-        }
+        InvalidateVisual();
     }
 }

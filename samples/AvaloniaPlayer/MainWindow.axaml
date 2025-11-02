@@ -14,15 +14,15 @@
                     <Separator/>
                     <MenuItem Header="_Exit" Name="MenuExit"/>
                 </MenuItem>
-                <MenuItem Header="URI" Name="MenuURI">
+                <MenuItem Header="URI" Name="MenuUri">
                     <StackPanel Orientation="Horizontal">
-                        <AutoCompleteBox Name="urisOfChoice" Width="240"/>
-                        <Button Name="openUriButton" IsDefault="True" Content="Open" IsEnabled="False"/>
+                        <AutoCompleteBox Name="UrisOfChoice" Width="240"/>
+                        <Button Name="OpenUriButton" IsDefault="True" Content="Open" IsEnabled="False"/>
                     </StackPanel>
                 </MenuItem>
             </Menu>
             <Grid>
-                <custom:GstFrameRenderer Name="frameImage" DockPanel.Dock="Top"/>
+                <custom:GstFrameRenderer Name="FrameImage" DockPanel.Dock="Top"/>
             </Grid>
         </DockPanel>
     </Grid>
